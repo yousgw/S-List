@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <Test/>
+      <NewTask/>
       <v-row class="grey lighten-3">
         <v-col cols="3" style="background-color: #FFCDD2">
          <Test/>
@@ -17,12 +17,14 @@
 <script>
 import HelloWorld from './components/HelloWorld';
 import Test from './components/Test';
+import NewTask from './components/NewTask';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Test,
+    NewTask,
   },
 
   data: () => ({
