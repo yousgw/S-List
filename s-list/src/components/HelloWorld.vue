@@ -1,86 +1,61 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+  <v-card>
+        <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
+          <v-btn outlined small class="ma-4" @click="setToday">
+            今日
+          </v-btn>
+          <v-btn icon @click="$refs.calendar.prev()">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-btn icon @click="$refs.calendar.next()">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-sheet>
+        <v-sheet height="94vh">
+          <v-calendar
+            ref="calendar"
+            v-model="value"
+            :events="events"
+            :event-color="getEventColor"
+            locale="ja-jp"
+            :day-format="(timestamp) => new Date(timestamp.date).getDate()"
+            :month-format="(timestamp) => new Date(timestamp.date).getMonth() + 1 + ' /'"
+            @change="getEvents"
+            @click:event="showEvent"
+            @click:date="viewDay"
+          ></v-calendar>
+        </v-sheet>
 
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-
-      
-    </v-row>
-  </v-container>
+  </v-card>
 </template>
 
 <script>
-  export default {
-    name: 'HelloWorld',
+import moment from 'moment';
 
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
-  }
+export default {
+  data: () => ({
+    events: [],
+    value: moment().format('yyyy-MM-DD'),
+  }),
+  computed: {
+    title() {
+      return moment(this.value).format('yyyy年 M月');
+    },
+  },
+  methods: {
+    setToday() {
+      this.value = moment().format('yyyy-MM-DD');
+    },
+    getEvents() {
+      const events = [
+        // new Dateからmomentに変更
+      ];
+      this.events = events;
+    },
+    getEventColor(event) {
+      return event.color;
+    },
+  },
+};
 </script>

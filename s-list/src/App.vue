@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <v-container>
-       <v-row class="grey lighten-3">
+      <Test/>
+      <v-row class="grey lighten-3">
         <v-col cols="3" style="background-color: #FFCDD2">
          <Test/>
         </v-col>
