@@ -19,11 +19,15 @@
         </v-row>
         <v-card>
             <v-expansion-panels>
-                <v-expansion-panel                >
+                <v-expansion-panel>
                 <v-expansion-panel-header>
                     詳細設定
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
+                    <v-textarea
+                    v-model="intro"
+                    label="Introduction"
+                    ></v-textarea>
                     <v-switch
                     class="ma-3"
                     v-model="limit"
@@ -97,12 +101,12 @@
                 color="primary"
             >
                 <v-list-item
+                two-line
                 v-for="(item, i) in items"
                 :key="i"
                 >
                     <v-list-item-content>
-                        <v-list-item-title v-text="item.text"></v-list-item-title>
-                    </v-list-item-content>
+                        <v-list-item-title v-text="item.text"></v-list-item-title>                    </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
             </v-list>
@@ -115,19 +119,29 @@
         data: () => ({
             items: [],
             task: '',
+            intro:'',
             date: new Date().toISOString().substr(0, 10),
             menu: false,
             show: false,
+            share: false,
         }),
         methods:{
             addTask(){
                 if(this.task.length != 0){
-                    var info = '';
-                    this.items.push({"text":this.task+this.date+this.share});
-                    info = "新規タスク"+this.task;
+                    var info='';
+                    var list='';
+                    
+                    info = "新規タスク："+this.task;
+                    list = this.task;
+                    this.items.push({"text":list});
+
+                    if(this.intro.length != 0)info += "\n説明："+this.intro;
+                    else info += "\n説明なし"
+                    this.intro = '';
 
                     if (this.show) info += "\n期限："+this.date;
                     else info += "\n期限なし";
+                    
                     if (this.share) info += "\n公開";
                     else info += "\n非公開";
 
