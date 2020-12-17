@@ -76,6 +76,11 @@
                             </v-date-picker>
                         </v-menu>
                     </div>
+                    <v-switch
+                    class="ma-3"
+                    v-model="share"
+                    label="公開設定"
+                    ></v-switch>
                 </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -116,8 +121,21 @@
         }),
         methods:{
             addTask(){
-                if(this.task.length != 0)this.items.push({"text":this.task});
-                this.task = '';
+                if(this.task.length != 0){
+                    var info = '';
+                    this.items.push({"text":this.task+this.date+this.share});
+                    info = "新規タスク"+this.task;
+
+                    if (this.show) info += "\n期限："+this.date;
+                    else info += "\n期限なし";
+                    if (this.share) info += "\n公開";
+                    else info += "\n非公開";
+
+                    alert(info);
+                
+                    this.task = '';
+                }
+                
             },
         }
     }
