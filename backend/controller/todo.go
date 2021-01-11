@@ -1,6 +1,7 @@
-package main
+package controller
 
 import (
+	"github.com/gin-gonic/gin"
 	"database/sql"
 	"fmt"
 
@@ -83,5 +84,11 @@ func outUnlimited() {
 func main() {
 	// in()
 	outUnlimited()
+
+	router := gin.Default()
+
+	todoRouter := router.Group("/todo"){
+		todoRouter.GET("/get", )
+	}
 
 }
