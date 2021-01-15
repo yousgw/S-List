@@ -1,19 +1,20 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"database/sql"
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
 
 	_ "github.com/lib/pq"
 )
 
 type TODO struct {
-	Limit     string
-	Title     string
-	Intro     string
-	Share     bool
-	Islimited bool
+	Limit     string `json:limit`
+	Title     string `json:title`
+	Intro     string `json:intro`
+	Share     bool `json:isShared`
+	Islimited bool `json:isLimited`
 }
 
 // 更新時の参照用としてTaskidとか作ったほうがいい
@@ -24,30 +25,40 @@ func checkErr(err error) {
 	}
 }
 
-func in(t TODO) {
+func In(c *gin.Context) {
+	var t TODO
 	db, err := sql.Open("postgres", "user=postgres password=postgres dbname=todo sslmode=disable")
 	defer db.Close()
 	checkErr(err)
+
+	c.BindJSON(&t)
 
 	stmt, err := db.Prepare("INSERT INTO todos VALUES ($1,$2,$3,$4,$5);")
 	checkErr(err)
 	res, err := stmt.Exec(t.Limit, t.Title, t.Intro, t.Share, t.Islimited)
 	checkErr(err)
 	_ = res
+	c.String(http.StatusCreated, "OK")
 }
 
 // 期日順で出力
-func outAll() {
+func OutAll(c *gin.Context) {
 	db, err := sql.Open("postgres", "user=postgres password=postgres dbname=todo sslmode=disable")
 	defer db.Close()
 	checkErr(err)
 
 	rows, err := db.Query("SELECT * FROM todos order by limit_date")
 	checkErr(err)
+	var data []TODO
 	for rows.Next() {
 		t := TODO{}
 		rows.Scan(&t.Limit, &t.Title, &t.Intro, &t.Share, &t.Islimited)
 		fmt.Println(t)
+		data := append(data, t)
+		c.JSONP(http.StatusOK, gin.H{
+			"message":"OK",
+			"todos": data,
+		})
 	}
 }
 
@@ -79,12 +90,4 @@ func outUnlimited() {
 		rows.Scan(&t.Limit, &t.Title, &t.Intro, &t.Share, &t.Islimited)
 		fmt.Println(t)
 	}
-}
-
-func main() {
-	// in()
-	outUnlimited()
-
-	router := gin.Default()
-
 }

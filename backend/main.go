@@ -1,7 +1,7 @@
 package main
 
 import (
-	todo "./controller/todo.go"
+	"./controller"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -12,8 +12,12 @@ func main() {
 
 	todoRouter := router.Group("/todo")
 	{
-		todoRouter.GET("/get", todo.outAll)
-		todoRouter.POST("/add", controller.in)
+		v1 := todoRouter.Group("/v1")
+		{
+			v1.GET("/get", controller.OutAll)
+			v1.POST("/add", controller.In)
+		}
+
 	}
 
 	router.Run(":3000")
