@@ -87,8 +87,4 @@ func main() {
 
 	router := gin.Default()
 
-	todoRouter := router.Group("/todo"){
-		todoRouter.GET("/get", )
-	}
-
 }
