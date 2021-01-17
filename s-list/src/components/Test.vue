@@ -1,5 +1,10 @@
 <template>
     <div>
+        <v-btn
+                elevation="2"
+                @click="getTask"
+                class="ma-5"
+                >Add</v-btn>
         <v-text-field
         label="New Task"
         hide-details="auto"
@@ -35,6 +40,8 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    
     export default {
         data: () => ({
             items: [],
@@ -44,6 +51,28 @@
             addTask(){
                 if(this.task.length != 0)this.items.push({"text":this.task});
                 this.task = '';
+            },
+            getTask(){
+                axios.get('/api/todo/v1/get')
+                .then(response => {
+                    if(response.status != 200){
+                        console.log('error');
+                        throw new Error('response error');
+                    }else{
+                        var resultTasks = response;
+                        console.log(resultTasks)
+                        alert(resultTasks);
+                    }
+                })
+                // axios.get('https://jsonplaceholder.typicode.com/users')
+                // .then(response => {
+                //     var users = response.data
+                //     alert(users.name)
+                //     console.log(users)
+                // })
+                // .catch(error =>{
+                //     alert(error)
+                // })
             }
         }
     }
