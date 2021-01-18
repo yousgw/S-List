@@ -12,16 +12,14 @@ func main() {
 	router := gin.Default()
 
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8080"}
+	config.AllowOrigins = []string{"*"}
 	router.Use(cors.New(config))
 
 	todoRouter := router.Group("/todo")
 	{
-		v1 := todoRouter.Group("/v1")
-		{
-			v1.GET("/get", controller.OutAll)
-			v1.POST("/add", controller.In)
-		}
+			todoRouter.GET("/get", controller.OutAll)
+			todoRouter.POST("/add", controller.In)
+			todoRouter.GET("/", controller.Test)
 
 	}
 

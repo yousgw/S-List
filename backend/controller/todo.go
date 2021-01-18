@@ -49,18 +49,14 @@ func OutAll(c *gin.Context) {
 
 	rows, err := db.Query("SELECT * FROM todos order by limit_date")
 	checkErr(err)
-	var data []TODO
+	var Data []TODO
 	for rows.Next() {
 		t := TODO{}
 		rows.Scan(&t.Limit, &t.Title, &t.Intro, &t.Share, &t.Islimited)
 		fmt.Println(t)
-		data := append(data, t)
-		c.JSONP(http.StatusOK, gin.H{
-			"message":"OK",
-			"todos": data,
-		})
+		Data = append(Data, t)
 	}
-
+	c.JSON(http.StatusOK, "OK")
 }
 
 // 期日ありのタスクを期日順で出力
@@ -91,4 +87,8 @@ func outUnlimited() {
 		rows.Scan(&t.Limit, &t.Title, &t.Intro, &t.Share, &t.Islimited)
 		fmt.Println(t)
 	}
+}
+
+func Test(c *gin.Context){
+	c.JSON(http.StatusOK,"OK")
 }

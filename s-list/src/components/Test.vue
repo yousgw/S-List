@@ -53,16 +53,19 @@
                 this.task = '';
             },
             getTask(){
-                axios.get('http://localhost:3000/todo/v1/get/')
+                axios.get('http://localhost:3000/todo/get/')
                 .then(response => {
                     if(response.status != 200){
                         console.log('error');
                         throw new Error('response error');
                     }else{
                         var resultTasks = response;
-                        console.log(resultTasks)
-                        alert(resultTasks);
+                        console.log(resultTasks.data)
+                        alert(resultTasks.data);
                     }
+                })
+                .catch(error =>{
+                    alert(error)
                 })
                 // axios.get('https://jsonplaceholder.typicode.com/users')
                 // .then(response => {
