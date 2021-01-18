@@ -60,6 +60,7 @@ func OutAll(c *gin.Context) {
 			"todos": data,
 		})
 	}
+
 }
 
 // 期日ありのタスクを期日順で出力

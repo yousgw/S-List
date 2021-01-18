@@ -53,7 +53,7 @@
                 this.task = '';
             },
             getTask(){
-                axios.get('/api/todo/v1/get')
+                axios.get('http://localhost:3000/todo/v1/get/')
                 .then(response => {
                     if(response.status != 200){
                         console.log('error');

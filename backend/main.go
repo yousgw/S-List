@@ -3,12 +3,17 @@ package main
 import (
 	"./controller"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 	_ "github.com/lib/pq"
 )
 
 func main() {
 
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:8080"}
+	router.Use(cors.New(config))
 
 	todoRouter := router.Group("/todo")
 	{
