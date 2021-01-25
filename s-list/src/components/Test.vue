@@ -1,10 +1,20 @@
 <template>
     <div>
         <v-btn
-                elevation="2"
-                @click="getTask"
-                class="ma-5"
-                >Add</v-btn>
+            elevation="2"
+            @click="getTask"
+            class="ma-5"
+        >Get</v-btn>
+        <v-btn
+            elevation="2"
+            @click="getTest"
+            class="ma-5"
+        >Test</v-btn>
+        <v-btn
+            elevation="2"
+            @click="getSample"
+            class="ma-5"
+        >Sample</v-btn>
         <v-text-field
         label="New Task"
         hide-details="auto"
@@ -53,7 +63,7 @@
                 this.task = '';
             },
             getTask(){
-                axios.get('http://localhost:3000/todo/get/')
+                axios.get('http://localhost:3000/')
                 .then(response => {
                     if(response.status != 200){
                         console.log('error');
@@ -67,15 +77,23 @@
                 .catch(error =>{
                     alert(error)
                 })
-                // axios.get('https://jsonplaceholder.typicode.com/users')
-                // .then(response => {
-                //     var users = response.data
-                //     alert(users.name)
-                //     console.log(users)
-                // })
-                // .catch(error =>{
-                //     alert(error)
-                // })
+            },
+            getTest(){
+                axios.get('http://localhost:3000/todo/')
+                .then(response => {
+                    console.log(response);
+                })
+            },
+            getSample(){
+                axios.get('https://jsonplaceholder.typicode.com/users')
+                .then(response => {
+                    var users = response.data
+                    alert(users.name)
+                    console.log(users)
+                })
+                .catch(error =>{
+                    alert(error)
+                })
             }
         }
     }

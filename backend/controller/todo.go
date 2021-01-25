@@ -56,7 +56,7 @@ func OutAll(c *gin.Context) {
 		fmt.Println(t)
 		Data = append(Data, t)
 	}
-	c.JSON(http.StatusOK, "OK")
+	c.JSON(http.StatusOK, Data)
 }
 
 // 期日ありのタスクを期日順で出力
