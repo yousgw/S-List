@@ -63,7 +63,7 @@
                 this.task = '';
             },
             getTask(){
-                axios.get('/api/')
+                axios.get('/todo/get/')
                 .then(response => {
                     if(response.status != 200){
                         console.log('error');
@@ -79,7 +79,7 @@
                 })
             },
             getTest(){
-                axios.get('/api/test/')
+                axios.get('/test/')
                 .then(response => {
                     console.log(response);
                 })
