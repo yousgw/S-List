@@ -15,8 +15,6 @@ func main() {
 	config.AllowAllOrigins = true
 	router.Use(cors.New(config))
 
-	router.GET("/test", controller.Test)
-	router.GET("/", controller.OutAll)
 	todoRouter := router.Group("/todo")
 	{
 			todoRouter.GET("/get", controller.OutAll)

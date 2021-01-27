@@ -55,6 +55,7 @@
     export default {
         data: () => ({
             items: [],
+            tasks: [],
             task: ''
         }),
         methods:{
@@ -69,9 +70,15 @@
                         console.log('error');
                         throw new Error('response error');
                     }else{
-                        var resultTasks = response;
-                        console.log(resultTasks.data)
-                        alert(resultTasks.data);
+                        var results = response.data;
+                        for(var i = 0;i < results.length;i++){
+                            if(!results[i].Islimited){
+                                this.items.push({"text":results[i].Title});
+                                this.tasks.push(results[i])
+                            }
+
+                        }
+                        console.log(this.tasks);
                     }
                 })
                 .catch(error =>{
